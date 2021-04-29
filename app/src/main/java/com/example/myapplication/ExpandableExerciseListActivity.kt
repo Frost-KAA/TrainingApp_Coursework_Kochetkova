@@ -32,12 +32,12 @@ class ExpandableExerciseListActivity : AppCompatActivity() {
 
         expandableListView = findViewById(R.id.elv)
         add_ex = findViewById(R.id.add_ex_list)
-        val db_call_tr = DBCallCreateTraining(this.applicationContext)
+        val db_call = DBCall(this.applicationContext)
 
         id = intent.extras?.get("id") as Int
 
         //подключение адаптера
-        val old_list  = db_call_tr.getAllExListByTraining(id!!)
+        val old_list  = db_call.getAllExListByTraining(id!!)
         adapter = CustomExpandableListAdapter(this, old_list)
         expandableListView.setAdapter(adapter)
 

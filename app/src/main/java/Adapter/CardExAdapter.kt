@@ -9,6 +9,7 @@ import android.widget.ImageButton
 import android.widget.TextView
 import androidx.recyclerview.widget.RecyclerView
 import com.example.myapplication.ApproachListActivity
+import com.example.myapplication.DataBase.DBCall
 import com.example.myapplication.DataBase.DBCallAdapter
 import com.example.myapplication.DataBase.DBCallCreateTraining
 import com.example.myapplication.Entity.Exercise
@@ -17,8 +18,8 @@ import com.example.myapplication.R
 
 class CardExAdapter( val id: Int, val context: Context) : RecyclerView.Adapter<CardExAdapter.ViewHolder>() {
 
-    val db_call_tr = DBCallCreateTraining(context)
-    private var list : List<Exercise>? = db_call_tr.getAllExByTraining(id)
+    val db_call = DBCall(context)
+    private var list : List<Exercise>? = db_call.getAllExByTraining(id)
 
     override fun onCreateViewHolder(parent: ViewGroup, viewType: Int): ViewHolder {
         val itemView = LayoutInflater.from(parent.context).inflate(R.layout.card_ex, parent, false)
@@ -30,8 +31,7 @@ class CardExAdapter( val id: Int, val context: Context) : RecyclerView.Adapter<C
     override fun onBindViewHolder(holder: ViewHolder, position: Int) {
         var currentItem : Exercise? = null
         currentItem = list?.get(position)
-        val db_call_a = DBCallAdapter(context)
-        holder.textView.text = db_call_a.getExName(currentItem)
+        holder.textView.text = db_call.getExName(currentItem)
 
         val i = Intent(context, ApproachListActivity::class.java)
         i.addFlags(Intent.FLAG_ACTIVITY_NEW_TASK);
@@ -55,7 +55,7 @@ class CardExAdapter( val id: Int, val context: Context) : RecyclerView.Adapter<C
         }
         val db_call_a = DBCallAdapter(context)
         db_call_a.deleteExFromTraining(currentItem)
-        list = db_call_tr.getAllExByTraining(id)
+        list = db_call.getAllExByTraining(id)
         notifyDataSetChanged()
     }
 }

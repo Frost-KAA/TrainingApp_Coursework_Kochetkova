@@ -36,7 +36,7 @@ class CreateTrainingActivity : AppCompatActivity() {
 
         name_view = findViewById(R.id.weight)
         add_ex = findViewById(R.id.add_ex_button)
-        val db_call_tr = DBCallCreateTraining(this.applicationContext)
+        val db_call = DBCall(this.applicationContext)
 
         val j = Intent(this, ExpandableExerciseListActivity::class.java)
         id = intent.extras?.get("id") as Int?
@@ -44,10 +44,10 @@ class CreateTrainingActivity : AppCompatActivity() {
 
         //создаём пустую тренировку, если она не создана
         if(id == null){
-            id = db_call_tr.createEmptyTraining()
+            id = db_call.createEmptyTraining()
             Log.d("IDD", id.toString())
         } else{
-            name = db_call_tr.getTrainingName(id!!)
+            name = db_call.getTrainingName(id!!)
         }
 
         // выставляем название тренировки
@@ -66,7 +66,7 @@ class CreateTrainingActivity : AppCompatActivity() {
             //изменяем название тренировки
             name = name_view.text.toString()
             Log.d("Name 2", name.toString())
-            db_call_tr.changeTrainingName(id!!, name!!)
+            db_call.changeTrainingName(id!!, name!!)
 
             //Переход в активность списка упражнений
             j.putExtra("id", id!!)

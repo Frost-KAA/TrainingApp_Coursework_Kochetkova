@@ -10,6 +10,7 @@ import android.widget.TextView
 import androidx.recyclerview.widget.LinearLayoutManager
 import androidx.recyclerview.widget.RecyclerView
 import com.example.myapplication.Adapter.CardApprAdapter
+import com.example.myapplication.DataBase.DBCall
 import com.example.myapplication.DataBase.DBCallCreateTraining
 import com.google.android.material.floatingactionbutton.FloatingActionButton
 
@@ -71,8 +72,8 @@ class ApproachListActivity : AppCompatActivity() {
         if (list.last() == Pair(null, null)){
             list.set(list.lastIndex, list.get(0))
         }
-        val db_call_tr = DBCallCreateTraining(this.applicationContext)
-        db_call_tr.addApprToEx(list, ex_id)
+        val db_call = DBCall(this.applicationContext)
+        db_call.addApprToEx(list, ex_id)
         val i = Intent(this, CreateTrainingActivity::class.java)
         i.putExtra("id", id)
         startActivity(i)

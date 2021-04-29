@@ -16,6 +16,7 @@ import androidx.appcompat.app.AppCompatActivity
 import androidx.recyclerview.widget.LinearLayoutManager
 import androidx.recyclerview.widget.RecyclerView
 import com.example.myapplication.Adapter.CardApprAdapter
+import com.example.myapplication.DataBase.DBCall
 import com.example.myapplication.DataBase.DBCallCreateTraining
 import com.example.myapplication.Entity.Exercise
 import java.util.*
@@ -40,15 +41,14 @@ class TrainingProcessActivity : AppCompatActivity() {
         setContentView(R.layout.activity_training_process)
 
         id = intent.extras?.get("id") as Int?
-        val db_call_pr = DBCallProcess(this.applicationContext)
-        val db_call_tr = DBCallCreateTraining(this.applicationContext)
+        val db_call = DBCall(this.applicationContext)
         ok = findViewById(R.id.ok)
         weight = findViewById(R.id.weight)
         repeat = findViewById(R.id.repeat)
         appr_name = findViewById(R.id.appr_number)
 
         var tr_name : String? = "Тренировка"
-        tr_name = id?.let { db_call_tr.getTrainingName(it) }
+        tr_name = id?.let { db_call.getTrainingName(it) }
         setTitle(tr_name)
 
         //запуск секундомера
@@ -56,15 +56,15 @@ class TrainingProcessActivity : AppCompatActivity() {
         chronometer.base = SystemClock.elapsedRealtime()
         chronometer.start()
 
-        day_id = db_call_pr.addDate()
+        day_id = db_call.addDate()
 
-        max_filling = id?.let { db_call_pr.getMaxFilling(it) }
+        max_filling = id?.let { db_call.getMaxFilling(it) }
 
 
-        val ex_list: List<Exercise>? = id?.let { db_call_tr.getAllExByTraining(it) }
+        val ex_list: List<Exercise>? = id?.let { db_call.getAllExByTraining(it) }
         var ex_num: Int = 0
         var appr_num: Int = 0
-        var appr_list = db_call_tr.getAllApprFromEx(ex_list?.get(ex_num)?.ID_Ex)
+        var appr_list = db_call.getAllApprFromEx(ex_list?.get(ex_num)?.ID_Ex)
 
         fun setApprOnView(){
             val st: String = "Подход " + (appr_num+1).toString()
@@ -102,7 +102,7 @@ class TrainingProcessActivity : AppCompatActivity() {
                     saveDateFromView()
                     appr_num = 0
                     ex_num += 1
-                    appr_list = db_call_tr.getAllApprFromEx(ex_list?.get(ex_num)?.ID_Ex)
+                    appr_list = db_call.getAllApprFromEx(ex_list?.get(ex_num)?.ID_Ex)
                     setApprOnView()
                     (recycler.adapter as CardProcessAdapter).changeColorOnPosition(ex_num)
                 }

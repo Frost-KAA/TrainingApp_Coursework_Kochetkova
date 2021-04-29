@@ -7,6 +7,7 @@ import android.view.ViewGroup
 import android.widget.TextView
 import androidx.recyclerview.widget.RecyclerView
 import com.example.myapplication.*
+import com.example.myapplication.DataBase.DBCall
 import com.example.myapplication.DataBase.DBCallAdapter
 import com.example.myapplication.DataBase.DBCallCreateTraining
 import com.example.myapplication.Entity.Exercise
@@ -14,8 +15,8 @@ import com.example.myapplication.Entity.Exercise
 
 class CardProcessAdapter( val id: Int, val context: Context) : RecyclerView.Adapter<CardProcessAdapter.ViewHolder>() {
 
-    val db_call_tr = DBCallCreateTraining(context)
-    private var list : List<Exercise>? = db_call_tr.getAllExByTraining(id)
+    val db_call = DBCall(context)
+    private var list : List<Exercise>? = db_call.getAllExByTraining(id)
     private var color_pos: Int = 0
 
     override fun onCreateViewHolder(parent: ViewGroup, viewType: Int): ViewHolder {

@@ -9,6 +9,7 @@ import android.widget.ProgressBar
 import android.widget.TextView
 import androidx.annotation.RequiresApi
 import androidx.recyclerview.widget.RecyclerView
+import com.example.myapplication.DataBase.DBCall
 import com.example.myapplication.DataBase.DBCallAdapter
 import com.example.myapplication.Entity.Efficiency
 import com.example.myapplication.R
@@ -16,8 +17,8 @@ import com.example.myapplication.R
 
 class CardHistoryAdapter (val context: Context) : RecyclerView.Adapter<CardHistoryAdapter.ViewHolder>() {
 
-    val db_call_a = DBCallAdapter(context)
-    private var list : List<Efficiency>? = db_call_a.getAllEffency()
+    val db_call = DBCall(context)
+    private var list : List<Efficiency>? = db_call.getAllEffency()
 
 
     override fun onCreateViewHolder(parent: ViewGroup, viewType: Int): ViewHolder {
@@ -31,8 +32,8 @@ class CardHistoryAdapter (val context: Context) : RecyclerView.Adapter<CardHisto
         var currentItem : Efficiency? = null
         currentItem = list?.get(position)
 
-        holder.name.text = db_call_a.getTrNameByEff(currentItem)
-        holder.date.text = db_call_a.getDateByEff(currentItem)
+        holder.name.text = db_call.getTrNameByEff(currentItem)
+        holder.date.text = db_call.getDateByEff(currentItem)
         holder.time.text = currentItem?.Time.toString() + " минут"
         val st: String = currentItem?.Percenr.toString() + "%"
         holder.percent.text = st
