@@ -12,6 +12,7 @@ import androidx.recyclerview.widget.RecyclerView
 import com.example.myapplication.Adapter.CardApprAdapter
 import com.example.myapplication.DataBase.DBCall
 import com.example.myapplication.DataBase.DBCallCreateTraining
+import com.example.myapplication.Entity.Approach
 import com.google.android.material.floatingactionbutton.FloatingActionButton
 
 class ApproachListActivity : AppCompatActivity() {
@@ -32,21 +33,17 @@ class ApproachListActivity : AppCompatActivity() {
         add_b = findViewById(R.id.add_button)
         del_b = findViewById(R.id.del_button)
         name = findViewById(R.id.info)
-        val db_call_tr = DBCallCreateTraining(this.applicationContext)
+        val db_call = DBCall(this.applicationContext)
         id = intent.extras?.get("id") as Int?
         ex_id = intent.extras?.get("ex_id") as Int?
 
-        name.text = ex_id?.let { db_call_tr.getExName(it) }
+        name.text = ex_id?.let { db_call.getExName(it) }
 
-        var list : ArrayList<Pair<Int?, Int?>> = db_call_tr.getAllApprFromEx(ex_id);
-        if (list.size == 0){
-            list = ArrayList<Pair<Int?, Int?>>()
-            list.add(Pair(null, null))
-        }
-
+        //val appr = Approach(null, ex_id!!, null, null)
+        //db_call.addApprToEx(appr)
 
         recycler =  findViewById(R.id.recycler_view)
-        recycler.adapter = CardApprAdapter(list, this@ApproachListActivity.applicationContext)
+        recycler.adapter = CardApprAdapter(ex_id!!, this@ApproachListActivity.applicationContext)
         recycler.layoutManager = LinearLayoutManager(this@ApproachListActivity)
         recycler.setHasFixedSize(true)
         recycler.itemAnimator = null
@@ -68,12 +65,7 @@ class ApproachListActivity : AppCompatActivity() {
     }
 
     override fun onOptionsItemSelected(item: MenuItem): Boolean {
-        list = (recycler.adapter as CardApprAdapter).getNewList()!!
-        if (list.last() == Pair(null, null)){
-            list.set(list.lastIndex, list.get(0))
-        }
-        val db_call = DBCall(this.applicationContext)
-        db_call.addApprToEx(list, ex_id)
+        (recycler.adapter as CardApprAdapter).notifyDataSetChanged()
         val i = Intent(this, CreateTrainingActivity::class.java)
         i.putExtra("id", id)
         startActivity(i)

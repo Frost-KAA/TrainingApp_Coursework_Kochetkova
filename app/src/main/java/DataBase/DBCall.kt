@@ -108,7 +108,15 @@ class DBCall (context: Context) {
                 Log.d("Ex", "Ex_list")
                 for (ex in ex_list){
                     val appr_list = ex.ID_Ex?.let { db?.ApproachDao()?.getInExByID(it) }
-                    if (appr_list == null || appr_list.size == 0){
+                    if (appr_list != null && appr_list.size != 0){
+                       for(appr in appr_list){
+                           if (appr.weight == null || appr.repeat == null){
+                               f = true
+                               break;
+                           }
+                       }
+                        if (f) break
+                    } else{
                         f = true
                         break
                     }
@@ -388,6 +396,15 @@ class DBCall (context: Context) {
         return list as List<ExerciseList>
     }
 
+    public fun addApprToEx(appr: Approach){
+        val t = Thread {
+            db = AppDatabase.getDatabase(context);
+            db?.ApproachDao()?.insert(appr)
+        }
+        t.start()
+        t.join()
+    }
+
     public fun addApprToEx(list:ArrayList<Pair<Int?, Int?>>, ex_id:Int?){
         val t = Thread {
             db = AppDatabase.getDatabase(context);
@@ -407,20 +424,15 @@ class DBCall (context: Context) {
         t.start()
     }
 
-    public fun getAllApprFromEx(ex_id:Int?): ArrayList<Pair<Int?, Int?>>{
-        val list = ArrayList<Pair<Int?, Int?>>()
+    public fun getAllApprFromEx(ex_id:Int?): List<Approach>?{
+        var appr_list :List<Approach>?=null
         val t = Thread {
             db = AppDatabase.getDatabase(context);
-            val appr_list = ex_id?.let { db?.ApproachDao()?.getInExByID(it) }
-            if (appr_list != null) {
-                for (appr in appr_list){
-                    list.add(Pair(appr.weight, appr.repeat))
-                }
-            }
+            appr_list = ex_id?.let { db?.ApproachDao()?.getInExByID(it) }
         }
         t.start()
         t.join()
-        return list
+        return appr_list
     }
 
     //заполнение даты в базе

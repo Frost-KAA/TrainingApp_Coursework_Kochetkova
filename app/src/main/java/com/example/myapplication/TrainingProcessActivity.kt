@@ -69,8 +69,8 @@ class TrainingProcessActivity : AppCompatActivity() {
         fun setApprOnView(){
             val st: String = "Подход " + (appr_num+1).toString()
             appr_name.text = st
-            weight.text = appr_list.get(appr_num).first.toString()
-            repeat.text = appr_list.get(appr_num).second.toString()
+            weight.text = appr_list?.get(appr_num)?.weight.toString()
+            repeat.text = appr_list?.get(appr_num)?.repeat.toString()
         }
 
         fun saveDateFromView(){
@@ -93,7 +93,7 @@ class TrainingProcessActivity : AppCompatActivity() {
         recycler.setHasFixedSize(true)
 
         ok.setOnClickListener {
-            if (appr_num+1 < appr_list.size) {
+            if (appr_num+1 < appr_list?.size ?: 0) {
                 saveDateFromView()
                 appr_num += 1
                 setApprOnView()
@@ -131,8 +131,8 @@ class TrainingProcessActivity : AppCompatActivity() {
         else{
             percent = 0
         }
-        val db_call_pr = DBCallProcess(this.applicationContext)
-        db_call_pr.setEfficiency(id!!, day_id!!, tr_time, percent)
+        val db_call = DBCall(this.applicationContext)
+        db_call.setEfficiency(id!!, day_id!!, tr_time, percent)
         val i = Intent(this, TrainingListActivity::class.java)
         startActivity(i)
         return super.onOptionsItemSelected(item)
