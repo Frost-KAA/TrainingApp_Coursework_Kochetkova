@@ -32,13 +32,11 @@ class ExpandableExerciseListActivity : AppCompatActivity() {
 
         expandableListView = findViewById(R.id.elv)
         add_ex = findViewById(R.id.add_ex_list)
-        val db_call = DBCall(this.applicationContext)
 
         id = intent.extras?.get("id") as Int
 
         //подключение адаптера
-        val old_list  = db_call.getAllExListByTraining(id!!)
-        adapter = CustomExpandableListAdapter(this, old_list)
+        adapter = CustomExpandableListAdapter(this, id!!)
         expandableListView.setAdapter(adapter)
 
         add_ex.setOnClickListener {
@@ -54,9 +52,6 @@ class ExpandableExerciseListActivity : AppCompatActivity() {
     }
 
     override fun onOptionsItemSelected(item: MenuItem): Boolean {
-        val db_call_tr = DBCallCreateTraining(this.applicationContext)
-        val new_id_list = (adapter as CustomExpandableListAdapter).getNewList() as ArrayList<Int>?
-        db_call_tr.addExToTraining(new_id_list, id)
         val p = Intent(this, CreateTrainingActivity::class.java)
         p.putExtra("id", id)
         startActivity(p)

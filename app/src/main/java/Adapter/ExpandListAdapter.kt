@@ -15,12 +15,13 @@ import com.example.myapplication.Entity.Muscle
 import com.example.myapplication.R
 
 class CustomExpandableListAdapter internal constructor(private val context: Context,
-                                                       private var oldlist : List <ExerciseList>
+                                                       val id: Int
                                     ) : BaseExpandableListAdapter() {
 
     val db_call = DBCall(this.context)
     val list: List<List<ExerciseList>> = db_call.getListData()
     val muscle : List<Muscle>? = db_call.getMuscle()
+    var oldlist : List <ExerciseList> = db_call.getAllExListByTraining(id)
 
     override fun getChild(listPosition: Int, expandedListPosition: Int): Any {
         return list[listPosition][expandedListPosition]
@@ -54,14 +55,15 @@ class CustomExpandableListAdapter internal constructor(private val context: Cont
             Log.d("Outer Pos", listPosition.toString())
             Log.d("Inner Pos", expandedListPosition.toString())
             if (oldlist.contains(expandedList) ){
-                (oldlist as ArrayList<ExerciseList>).remove(expandedList)
+                db_call.deleteExListFromTraining(expandedList.ID_ExList, id)
                 expandedListTextView.setBackgroundResource(R.color.white)
             }
             else{
-                (oldlist as ArrayList<ExerciseList>).add(expandedList)
+                db_call.addExToTraining(expandedList.ID_ExList, id)
                 expandedListTextView.setBackgroundResource(R.color.light_blue)
             }
-            //notifyDataSetChanged()
+            oldlist = db_call.getAllExListByTraining(id)
+            notifyDataSetChanged()
         }
 
         return convertView
@@ -108,9 +110,5 @@ class CustomExpandableListAdapter internal constructor(private val context: Cont
 
     override fun isChildSelectable(listPosition: Int, expandedListPosition: Int): Boolean {
         return true
-    }
-
-    fun getNewList() : ArrayList<Int>?{
-        return oldlist.let { db_call.getIdsExList(it) }
     }
 }

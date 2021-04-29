@@ -313,7 +313,7 @@ class DBCall (context: Context) {
     }
 
     //добавление упражнений в тренировку по спику id ExerciseList
-    public fun addExToTraining(ex_id_list:ArrayList<Int>?, id: Int?){
+    public fun addArrayExToTraining(ex_id_list:ArrayList<Int>?, id: Int?){
         val t = Thread{
             db = AppDatabase.getDatabase(context);
             if (ex_id_list != null) {
@@ -333,6 +333,40 @@ class DBCall (context: Context) {
         t.start()
         t.join()
     }
+
+    //добавление одного упражнения в тренировку по  id
+    public fun addExToTraining(ex_id: Int?, tr_id: Int?){
+        val t = Thread{
+            db = AppDatabase.getDatabase(context);
+            //проверяем, было ли такое упражнение в тренировке
+            if (ex_id!=null && tr_id!=null){
+                var ex = db?.ExerciseDao()?.getByExListAndTrainingId(ex_id, tr_id)
+                if (ex == null){
+                    ex = Exercise(null, tr_id, ex_id)
+                    if (ex != null) {
+                        db?.ExerciseDao()?.insert(ex)
+                    }
+                }
+            }
+        }
+        t.start()
+    }
+
+    //удаление одного упражнения из тренировку по id
+    public fun deleteExListFromTraining(ex_id: Int?, tr_id: Int?){
+        val t = Thread{
+            db = AppDatabase.getDatabase(context);
+            //проверяем, было ли такое упражнение в тренировке
+            if (ex_id!=null && tr_id!=null){
+                val ex = db?.ExerciseDao()?.getByExListAndTrainingId(ex_id, tr_id)
+                if (ex != null){
+                    db?.ExerciseDao()?.delete(ex)
+                }
+            }
+        }
+        t.start()
+    }
+
 
     //получение списка упражнений тренировки
     public fun getAllExListByTraining(id: Int) : List<ExerciseList>{
