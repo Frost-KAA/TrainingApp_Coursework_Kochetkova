@@ -63,7 +63,7 @@ class CardAdapter(private var list: List<Training>?, val context: Context) : Rec
 
 
         //  начать тренировку
-        holder.itemView.setOnClickListener{
+        holder.textView.setOnClickListener{
             val j = Intent(context, TrainingProcessActivity::class.java)
             j.addFlags(FLAG_ACTIVITY_NEW_TASK);
             if (currentItem != null) {

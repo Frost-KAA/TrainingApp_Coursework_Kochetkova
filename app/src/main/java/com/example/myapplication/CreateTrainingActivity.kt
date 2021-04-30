@@ -82,9 +82,9 @@ class CreateTrainingActivity : AppCompatActivity() {
 
     override fun onOptionsItemSelected(item: MenuItem): Boolean {
         name = name_view.text.toString()
-        val db_call_tr = DBCallCreateTraining(this.applicationContext)
+        val db_call = DBCall(this.applicationContext)
         val i = Intent(this, TrainingListActivity::class.java)
-        id?.let { db_call_tr.changeTrainingName(it, name!!) }
+        id?.let { db_call.changeTrainingName(it, name!!) }
         startActivity(i)
         return super.onOptionsItemSelected(item)
     }

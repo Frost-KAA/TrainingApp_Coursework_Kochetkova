@@ -495,4 +495,31 @@ class DBCall (context: Context) {
         return kol
     }
 
+    // удаление эффективности из списка
+    public fun deleteEff(eff: Efficiency?) {
+        val t = Thread{
+            db = AppDatabase.getDatabase(context);
+            if (eff != null) {
+                db?.EfficiencyDao()?.delete(eff)
+            }
+        }
+        t.start()
+        t.join()
+    }
+
+    // удаление всего списка эффективности
+    public fun deleteAllEff() {
+        val t = Thread{
+            db = AppDatabase.getDatabase(context);
+            val list : List<Efficiency>? = db?.EfficiencyDao()?.getAll()
+            if (list != null) {
+                for (eff in list){
+                    db?.EfficiencyDao()?.delete(eff)
+                }
+            }
+        }
+        t.start()
+        t.join()
+    }
+
 }

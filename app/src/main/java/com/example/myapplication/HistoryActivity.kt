@@ -2,10 +2,15 @@ package com.example.myapplication
 
 import Adapter.CardHistoryAdapter
 import Adapter.CardProcessAdapter
+import android.content.Intent
 import androidx.appcompat.app.AppCompatActivity
 import android.os.Bundle
+import android.view.Menu
+import android.view.MenuItem
 import androidx.recyclerview.widget.LinearLayoutManager
 import androidx.recyclerview.widget.RecyclerView
+import com.example.myapplication.DataBase.DBCall
+import com.example.myapplication.DataBase.DBCallCreateTraining
 
 class HistoryActivity : AppCompatActivity() {
 
@@ -21,5 +26,18 @@ class HistoryActivity : AppCompatActivity() {
         recycler.adapter = CardHistoryAdapter(this@HistoryActivity.applicationContext)
         recycler.layoutManager = LinearLayoutManager(this@HistoryActivity)
         recycler.setHasFixedSize(true)
+    }
+
+    // кнопка очистить историю
+    override fun onCreateOptionsMenu(menu: Menu?): Boolean {
+        getMenuInflater().inflate(R.menu.history_menu, menu);
+        return super.onCreateOptionsMenu(menu)
+    }
+
+    override fun onOptionsItemSelected(item: MenuItem): Boolean {
+        val db_call = DBCall(this.applicationContext)
+        db_call.deleteAllEff()
+        (recycler.adapter as CardHistoryAdapter).update()
+        return super.onOptionsItemSelected(item)
     }
 }
