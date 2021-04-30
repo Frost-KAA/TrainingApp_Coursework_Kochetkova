@@ -5,14 +5,18 @@
     android:layout_width="match_parent"
     android:layout_height="match_parent"
     android:background="@color/light"
+    android:padding="10dp"
     tools:context=".TrainingListActivity">
 
     <androidx.recyclerview.widget.RecyclerView
         android:id="@+id/recycler_view"
         android:layout_width="match_parent"
         android:layout_height="match_parent"
+        android:layout_margin="0dp"
+        android:background="@color/light"
         android:clipToPadding="false"
-        android:padding="4dp"
+        tools:layout_editor_absoluteX="10dp"
+        tools:layout_editor_absoluteY="10dp"
         tools:listitem="@layout/card" />
 
     <com.google.android.material.floatingactionbutton.FloatingActionButton
@@ -29,6 +33,7 @@
         app:layout_constraintEnd_toEndOf="parent"
         app:rippleColor="#FFFFFF"
         app:srcCompat="@drawable/ic_baseline_add_24"
-        app:tint="@color/white" />
+        app:tint="@color/white"
+        tools:ignore="VectorDrawableCompat" />
 
 </androidx.constraintlayout.widget.ConstraintLayout>

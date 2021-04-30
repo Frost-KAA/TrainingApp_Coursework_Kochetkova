@@ -8,13 +8,18 @@ import android.view.LayoutInflater
 import android.view.View
 import android.view.ViewGroup
 import android.widget.ImageButton
+import android.widget.ImageView
 import android.widget.TextView
 import androidx.recyclerview.widget.RecyclerView
+import com.chauthai.swipereveallayout.SwipeRevealLayout
+import com.chauthai.swipereveallayout.ViewBinderHelper
 import com.example.myapplication.*
 import com.example.myapplication.DataBase.DBCall
 import com.example.myapplication.Entity.Training
 
 class CardAdapter(private var list: List<Training>?, val context: Context) : RecyclerView.Adapter<CardAdapter.ViewHolder>(){
+
+    private val viewBinderHelper = ViewBinderHelper()
 
     override fun onCreateViewHolder(parent: ViewGroup, viewType: Int): ViewHolder {
         val itemView = LayoutInflater.from(parent.context).inflate(R.layout.card, parent, false)
@@ -24,17 +29,26 @@ class CardAdapter(private var list: List<Training>?, val context: Context) : Rec
     override fun getItemCount() = list?.size ?: 0
 
     override fun onBindViewHolder(holder: ViewHolder, position: Int) {
+
         var currentItem : Training? = null
         if (list != null) {
             currentItem = list!![position]
+        }
+
+        viewBinderHelper.setOpenOnlyOne(true)
+        if (currentItem != null) {
+            viewBinderHelper.bind(holder.layout, currentItem.name)
+            viewBinderHelper.closeLayout(currentItem.name)
             holder.textView.text = currentItem.name
         }
 
+
         val db_call = DBCall(context)
 
-        val i = Intent(context, CreateTrainingActivity::class.java)
-        i.addFlags(FLAG_ACTIVITY_NEW_TASK);
+        //редактировать тренировку
         holder.edit.setOnClickListener{
+            val i = Intent(context, CreateTrainingActivity::class.java)
+            i.addFlags(FLAG_ACTIVITY_NEW_TASK);
             if (currentItem != null) {
                 i.putExtra("id", currentItem.ID_Training)
                 Log.d("ID Adapter", currentItem.ID_Training.toString())
@@ -42,9 +56,16 @@ class CardAdapter(private var list: List<Training>?, val context: Context) : Rec
             context.startActivity(i)
         }
 
-        val j = Intent(context, TrainingProcessActivity::class.java)
-        j.addFlags(FLAG_ACTIVITY_NEW_TASK);
+        //удалить тренировку
+        holder.delete.setOnClickListener{
+            delete(position)
+        }
+
+
+        //  начать тренировку
         holder.itemView.setOnClickListener{
+            val j = Intent(context, TrainingProcessActivity::class.java)
+            j.addFlags(FLAG_ACTIVITY_NEW_TASK);
             if (currentItem != null) {
                 j.putExtra("id", currentItem.ID_Training)
             }
@@ -66,7 +87,10 @@ class CardAdapter(private var list: List<Training>?, val context: Context) : Rec
 
     class ViewHolder(itemView: View): RecyclerView.ViewHolder(itemView){
         val textView: TextView = itemView.findViewById(R.id.tr_name)
-        val edit: ImageButton = itemView.findViewById(R.id.add_appr_button)
+        val edit: ImageView = itemView.findViewById(R.id.img_edit)
+        val delete: ImageView = itemView.findViewById(R.id.img_delete)
+        val layout : SwipeRevealLayout = itemView.findViewById(R.id.swipe_layout)
+
 
     }
 

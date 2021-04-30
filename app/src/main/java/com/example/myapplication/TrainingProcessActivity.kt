@@ -93,6 +93,9 @@ class TrainingProcessActivity : AppCompatActivity() {
         recycler.setHasFixedSize(true)
 
         ok.setOnClickListener {
+            if (appr_name.text == "Тренировка завершена"){
+                endTraining()
+            }
             if (appr_num+1 < appr_list?.size ?: 0) {
                 saveDateFromView()
                 appr_num += 1
@@ -122,6 +125,11 @@ class TrainingProcessActivity : AppCompatActivity() {
     }
 
     override fun onOptionsItemSelected(item: MenuItem): Boolean {
+        endTraining()
+        return super.onOptionsItemSelected(item)
+    }
+
+    fun endTraining(){
         val elapsedMillis: Long = (SystemClock.elapsedRealtime() - chronometer.base)
         tr_time = (elapsedMillis / 1000 / 60).toInt()
         chronometer.stop()
@@ -135,6 +143,5 @@ class TrainingProcessActivity : AppCompatActivity() {
         db_call.setEfficiency(id!!, day_id!!, tr_time, percent)
         val i = Intent(this, TrainingListActivity::class.java)
         startActivity(i)
-        return super.onOptionsItemSelected(item)
     }
 }

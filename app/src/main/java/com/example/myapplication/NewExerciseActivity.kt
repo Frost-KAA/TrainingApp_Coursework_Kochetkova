@@ -29,10 +29,12 @@ class NewExerciseActivity : AppCompatActivity() {
     }
 
     override fun onOptionsItemSelected(item: MenuItem): Boolean {
-        val name_st : String = name.text.toString()
+        val name_st : String? = name.text.toString()
         val desc_st : String? = desc.text.toString()
         val db_call = DBCall(this.applicationContext)
-        db_call.addNewExList(name_st, desc_st)
+        if (name_st != null) {
+            db_call.addNewExList(name_st, desc_st)
+        }
         val i = Intent(this, ExpandableExerciseListActivity::class.java)
         startActivity(i)
         return super.onOptionsItemSelected(item)

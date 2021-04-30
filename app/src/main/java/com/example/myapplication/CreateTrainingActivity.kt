@@ -72,19 +72,6 @@ class CreateTrainingActivity : AppCompatActivity() {
             j.putExtra("id", id!!)
             startActivity(j)
         }
-
-        // обработка свапа вправо на удаление
-        val itemTouchCallback = object : ItemTouchHelper.SimpleCallback(0, ItemTouchHelper.RIGHT){
-            override fun onMove(recyclerView: RecyclerView, viewHolder: RecyclerView.ViewHolder, target: RecyclerView.ViewHolder): Boolean {
-                return false
-            }
-
-            override fun onSwiped(viewHolder: RecyclerView.ViewHolder, direction: Int) {
-                (recycler.adapter as CardExAdapter).delete(viewHolder.adapterPosition)
-            }
-        }
-        val itemTouchHelper = ItemTouchHelper(itemTouchCallback)
-        itemTouchHelper.attachToRecyclerView(recycler)
     }
 
     // кнопка сохранить в меню

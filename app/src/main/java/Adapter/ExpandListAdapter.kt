@@ -51,6 +51,8 @@ class CustomExpandableListAdapter internal constructor(private val context: Cont
         }
 
 
+
+
         expandedListTextView.setOnClickListener {
             Log.d("Outer Pos", listPosition.toString())
             Log.d("Inner Pos", expandedListPosition.toString())

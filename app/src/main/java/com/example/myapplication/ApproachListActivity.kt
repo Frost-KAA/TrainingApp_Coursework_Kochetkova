@@ -19,7 +19,6 @@ class ApproachListActivity : AppCompatActivity() {
 
     lateinit var recycler : RecyclerView
     lateinit var add_b: FloatingActionButton
-    lateinit var del_b: FloatingActionButton
     var id : Int? = null
     var ex_id : Int? = null
     lateinit var list: ArrayList<Pair<Int?, Int?>>
@@ -31,16 +30,12 @@ class ApproachListActivity : AppCompatActivity() {
         setTitle("Подходы")
 
         add_b = findViewById(R.id.add_button)
-        del_b = findViewById(R.id.del_button)
         name = findViewById(R.id.info)
         val db_call = DBCall(this.applicationContext)
         id = intent.extras?.get("id") as Int?
         ex_id = intent.extras?.get("ex_id") as Int?
 
         name.text = ex_id?.let { db_call.getExName(it) }
-
-        //val appr = Approach(null, ex_id!!, null, null)
-        //db_call.addApprToEx(appr)
 
         recycler =  findViewById(R.id.recycler_view)
         recycler.adapter = CardApprAdapter(ex_id!!, this@ApproachListActivity.applicationContext)
@@ -50,10 +45,6 @@ class ApproachListActivity : AppCompatActivity() {
 
         add_b.setOnClickListener{
             (recycler.adapter as CardApprAdapter).addNewApp()
-        }
-
-        del_b.setOnClickListener{
-            (recycler.adapter as CardApprAdapter).delApp()
         }
 
     }
