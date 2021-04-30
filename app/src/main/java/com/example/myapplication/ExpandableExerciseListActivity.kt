@@ -29,6 +29,7 @@ class ExpandableExerciseListActivity : AppCompatActivity() {
         super.onCreate(savedInstanceState)
         setContentView(R.layout.activity_expandable_exercise_list)
         setTitle("Список упражнений")
+        getSupportActionBar()?.setDisplayHomeAsUpEnabled(true)
 
         expandableListView = findViewById(R.id.elv)
         add_ex = findViewById(R.id.add_ex_list)
@@ -52,9 +53,17 @@ class ExpandableExerciseListActivity : AppCompatActivity() {
     }
 
     override fun onOptionsItemSelected(item: MenuItem): Boolean {
-        val p = Intent(this, CreateTrainingActivity::class.java)
-        p.putExtra("id", id)
-        startActivity(p)
+        when (item.itemId) {
+            android.R.id.home -> {
+                finish()
+                return true
+            }
+            else -> {
+                val p = Intent(this, CreateTrainingActivity::class.java)
+                p.putExtra("id", id)
+                startActivity(p)
+            }
+        }
         return super.onOptionsItemSelected(item)
     }
 

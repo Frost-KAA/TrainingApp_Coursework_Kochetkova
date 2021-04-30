@@ -20,6 +20,7 @@ class HistoryActivity : AppCompatActivity() {
         super.onCreate(savedInstanceState)
         setContentView(R.layout.activity_history)
         setTitle("История тренировок")
+        getSupportActionBar()?.setDisplayHomeAsUpEnabled(true)
 
         //подключение адаптера
         recycler =  findViewById(R.id.recycler_view)
@@ -35,9 +36,17 @@ class HistoryActivity : AppCompatActivity() {
     }
 
     override fun onOptionsItemSelected(item: MenuItem): Boolean {
-        val db_call = DBCall(this.applicationContext)
-        db_call.deleteAllEff()
-        (recycler.adapter as CardHistoryAdapter).update()
+        when (item.itemId) {
+            android.R.id.home -> {
+                finish()
+                return true
+            }
+            else -> {
+                val db_call = DBCall(this.applicationContext)
+                db_call.deleteAllEff()
+                (recycler.adapter as CardHistoryAdapter).update()
+            }
+        }
         return super.onOptionsItemSelected(item)
     }
 }

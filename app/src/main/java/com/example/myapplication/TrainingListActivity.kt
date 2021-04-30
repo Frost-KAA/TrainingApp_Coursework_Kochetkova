@@ -5,10 +5,7 @@ import android.os.AsyncTask
 import android.os.Bundle
 import android.view.Menu
 import android.view.MenuItem
-import android.widget.Button
 import androidx.appcompat.app.AppCompatActivity
-import androidx.recyclerview.widget.DividerItemDecoration
-import androidx.recyclerview.widget.ItemTouchHelper
 import androidx.recyclerview.widget.LinearLayoutManager
 import androidx.recyclerview.widget.RecyclerView
 import com.example.myapplication.Adapter.CardAdapter
@@ -26,6 +23,7 @@ class TrainingListActivity : AppCompatActivity() {
         super.onCreate(savedInstanceState)
         setContentView(R.layout.activity_training_list)
         setTitle("Тренировки")
+        getSupportActionBar()?.setDisplayHomeAsUpEnabled(true)
 
         MyAsyncTask().execute()
 
@@ -36,8 +34,6 @@ class TrainingListActivity : AppCompatActivity() {
         add_b.setOnClickListener{
             startActivity(i)
         }
-
-
 
     }
 
@@ -65,8 +61,16 @@ class TrainingListActivity : AppCompatActivity() {
     }
 
     override fun onOptionsItemSelected(item: MenuItem): Boolean {
-        val j = Intent(this, HistoryActivity::class.java)
-        startActivity(j)
+        when (item.itemId) {
+            android.R.id.home -> {
+                finish()
+                return true
+            }
+            else -> {
+                val j = Intent(this, HistoryActivity::class.java)
+                startActivity(j)
+            }
+        }
         return super.onOptionsItemSelected(item)
     }
 

@@ -39,6 +39,7 @@ class TrainingProcessActivity : AppCompatActivity() {
     override fun onCreate(savedInstanceState: Bundle?) {
         super.onCreate(savedInstanceState)
         setContentView(R.layout.activity_training_process)
+        getSupportActionBar()?.setDisplayHomeAsUpEnabled(true)
 
         id = intent.extras?.get("id") as Int?
         val db_call = DBCall(this.applicationContext)
@@ -125,7 +126,15 @@ class TrainingProcessActivity : AppCompatActivity() {
     }
 
     override fun onOptionsItemSelected(item: MenuItem): Boolean {
-        endTraining()
+        when (item.itemId) {
+            android.R.id.home -> {
+                finish()
+                return true
+            }
+            else -> {
+                endTraining()
+            }
+        }
         return super.onOptionsItemSelected(item)
     }
 

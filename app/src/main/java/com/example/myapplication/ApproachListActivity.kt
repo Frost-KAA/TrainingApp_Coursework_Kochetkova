@@ -1,5 +1,6 @@
 package com.example.myapplication
 
+import Adapter.CardHistoryAdapter
 import android.content.Intent
 import androidx.appcompat.app.AppCompatActivity
 import android.os.Bundle
@@ -28,6 +29,7 @@ class ApproachListActivity : AppCompatActivity() {
         super.onCreate(savedInstanceState)
         setContentView(R.layout.activity_approach_list)
         setTitle("Подходы")
+        getSupportActionBar()?.setDisplayHomeAsUpEnabled(true)
 
         add_b = findViewById(R.id.add_button)
         name = findViewById(R.id.info)
@@ -56,10 +58,18 @@ class ApproachListActivity : AppCompatActivity() {
     }
 
     override fun onOptionsItemSelected(item: MenuItem): Boolean {
-        (recycler.adapter as CardApprAdapter).notifyDataSetChanged()
-        val i = Intent(this, CreateTrainingActivity::class.java)
-        i.putExtra("id", id)
-        startActivity(i)
+        when (item.itemId) {
+            android.R.id.home -> {
+                finish()
+                return true
+            }
+            else -> {
+                (recycler.adapter as CardApprAdapter).notifyDataSetChanged()
+                val i = Intent(this, CreateTrainingActivity::class.java)
+                i.putExtra("id", id)
+                startActivity(i)
+            }
+        }
         return super.onOptionsItemSelected(item)
     }
 }

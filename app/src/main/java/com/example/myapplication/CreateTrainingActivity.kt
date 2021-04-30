@@ -14,6 +14,7 @@ import androidx.recyclerview.widget.ItemTouchHelper
 import androidx.recyclerview.widget.LinearLayoutManager
 import androidx.recyclerview.widget.RecyclerView
 import com.example.myapplication.Adapter.CardAdapter
+import com.example.myapplication.Adapter.CardApprAdapter
 import com.example.myapplication.Adapter.CardExAdapter
 import com.example.myapplication.DataBase.DBCall
 import com.example.myapplication.DataBase.DBCallCreateTraining
@@ -33,6 +34,7 @@ class CreateTrainingActivity : AppCompatActivity() {
         super.onCreate(savedInstanceState)
         setContentView(R.layout.activity_create_training)
         setTitle("Тренировка")
+        getSupportActionBar()?.setDisplayHomeAsUpEnabled(true)
 
         name_view = findViewById(R.id.weight)
         add_ex = findViewById(R.id.add_ex_button)
@@ -81,11 +83,19 @@ class CreateTrainingActivity : AppCompatActivity() {
     }
 
     override fun onOptionsItemSelected(item: MenuItem): Boolean {
-        name = name_view.text.toString()
-        val db_call = DBCall(this.applicationContext)
-        val i = Intent(this, TrainingListActivity::class.java)
-        id?.let { db_call.changeTrainingName(it, name!!) }
-        startActivity(i)
+        when (item.itemId) {
+            android.R.id.home -> {
+                finish()
+                return true
+            }
+            else -> {
+                name = name_view.text.toString()
+                val db_call = DBCall(this.applicationContext)
+                val i = Intent(this, TrainingListActivity::class.java)
+                id?.let { db_call.changeTrainingName(it, name!!) }
+                startActivity(i)
+            }
+        }
         return super.onOptionsItemSelected(item)
     }
 }
