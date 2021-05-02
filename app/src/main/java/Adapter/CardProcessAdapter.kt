@@ -67,7 +67,22 @@ class CardProcessAdapter( val id: Int, val context: Context) : RecyclerView.Adap
         }
 
         holder.textView.setOnClickListener {
+            changeColorOnPosition(position)
+            val activity = holder.itemView.context as? TrainingProcessActivity
 
+            //если упражнение уже выполнено
+            if (done_kol_appr == kol_appr){
+                if (activity != null) {
+                    activity.exIsDone(position)
+                }
+            }
+
+            //начинаем делать это упражнение
+            else{
+                if (activity != null) {
+                    activity. beginEx(position, done_kol_appr)
+                }
+            }
         }
     }
 
@@ -89,6 +104,11 @@ class CardProcessAdapter( val id: Int, val context: Context) : RecyclerView.Adap
         kol += 1
         (done_kol_appr_list as ArrayList<Int>).set(position, kol)
         notifyDataSetChanged()
+    }
+
+    fun getDoneKolAppr(position: Int): Int{
+        val kol: Int = done_kol_appr_list.get(position)
+        return kol
     }
 
 }
