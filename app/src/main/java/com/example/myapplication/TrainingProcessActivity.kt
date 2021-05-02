@@ -66,6 +66,7 @@ class TrainingProcessActivity : AppCompatActivity() {
         var ex_num: Int = 0
         var appr_num: Int = 0
         var appr_list = db_call.getAllApprFromEx(ex_list?.get(ex_num)?.ID_Ex)
+        var ex_is_done: Array<Boolean?> = arrayOfNulls(ex_list!!.size)
 
         fun setApprOnView(){
             val st: String = "Подход " + (appr_num+1).toString()
@@ -99,11 +100,13 @@ class TrainingProcessActivity : AppCompatActivity() {
             }
             if (appr_num+1 < appr_list?.size ?: 0) {
                 saveDateFromView()
+                (recycler.adapter as CardProcessAdapter).changeDoneKolAppr(ex_num)
                 appr_num += 1
                 setApprOnView()
             } else if (ex_list != null) {
                 if (ex_num + 1 < ex_list.size){
                     saveDateFromView()
+                    (recycler.adapter as CardProcessAdapter).changeDoneKolAppr(ex_num)
                     appr_num = 0
                     ex_num += 1
                     appr_list = db_call.getAllApprFromEx(ex_list?.get(ex_num)?.ID_Ex)
@@ -111,6 +114,7 @@ class TrainingProcessActivity : AppCompatActivity() {
                     (recycler.adapter as CardProcessAdapter).changeColorOnPosition(ex_num)
                 }
                 else{
+                    (recycler.adapter as CardProcessAdapter).changeDoneKolAppr(ex_num)
                     val st: String = "Тренировка завершена"
                     appr_name.text = st
                     saveDateFromView()

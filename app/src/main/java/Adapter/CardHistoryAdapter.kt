@@ -40,16 +40,10 @@ class CardHistoryAdapter (val context: Context) : RecyclerView.Adapter<CardHisto
         currentItem = list?.get(position)
 
         viewBinderHelper.setOpenOnlyOne(true)
-        if (currentItem != null) {
-            val st_name = db_call.getTrNameByEff(currentItem)
-            viewBinderHelper.bind(holder.layout, st_name)
-            viewBinderHelper.closeLayout(st_name)
-            holder.name.text = st_name
-            holder.date.text = db_call.getDateByEff(currentItem)
-            holder.time.text = currentItem?.Time.toString() + " минут"
-            val st: String = currentItem?.Percenr.toString() + "%"
-            holder.percent.text = st
-        }
+
+        val st_name = db_call.getTrNameByEff(currentItem)
+        viewBinderHelper.bind(holder.layout, st_name)
+        viewBinderHelper.closeLayout(st_name)
 
         holder.name.text = db_call.getTrNameByEff(currentItem)
         holder.date.text = db_call.getDateByEff(currentItem)
@@ -64,6 +58,7 @@ class CardHistoryAdapter (val context: Context) : RecyclerView.Adapter<CardHisto
             if (currentItem != null) {
                 i.putExtra("id", currentItem.Training_ID)
             }
+            viewBinderHelper.closeLayout(st_name)
             context.startActivity(i)
         }
 

@@ -51,14 +51,18 @@ class CardAdapter(private var list: List<Training>?, val context: Context) : Rec
             i.addFlags(FLAG_ACTIVITY_NEW_TASK);
             if (currentItem != null) {
                 i.putExtra("id", currentItem.ID_Training)
-                Log.d("ID Adapter", currentItem.ID_Training.toString())
+                viewBinderHelper.closeLayout(currentItem.name)
             }
             context.startActivity(i)
         }
 
         //удалить тренировку
         holder.delete.setOnClickListener{
-            delete(position)
+            list = db_call.deleteTraining(currentItem)
+            if (currentItem != null) {
+                viewBinderHelper.closeLayout(currentItem.name)
+            }
+            notifyDataSetChanged()
         }
 
 
@@ -70,7 +74,6 @@ class CardAdapter(private var list: List<Training>?, val context: Context) : Rec
                 j.putExtra("id", currentItem.ID_Training)
             }
             val no_appr : Boolean = db_call.isThereNoAppr(currentItem?.ID_Training!!)
-            Log.d("No_appr", no_appr.toString())
             if (no_appr){
                 //вызываем диалоговое окно
                 val dialog = WarningDialogFragment()
@@ -90,8 +93,6 @@ class CardAdapter(private var list: List<Training>?, val context: Context) : Rec
         val edit: ImageView = itemView.findViewById(R.id.img_edit)
         val delete: ImageView = itemView.findViewById(R.id.img_delete)
         val layout : SwipeRevealLayout = itemView.findViewById(R.id.swipe_layout)
-
-
     }
 
     fun delete(position: Int){

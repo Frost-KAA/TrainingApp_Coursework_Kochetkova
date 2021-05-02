@@ -47,10 +47,13 @@ class CardExAdapter( val id: Int, val context: Context) : RecyclerView.Adapter<C
 
         //удалить тренировку
         holder.delete.setOnClickListener{
-            delete(position)
+            db_call.deleteExFromTraining(currentItem)
+            list = db_call.getAllExByTraining(id)
+            viewBinderHelper.closeLayout(st)
+            notifyDataSetChanged()
         }
 
-        //название тренировки
+        //переход в подходы
         val i = Intent(context, ApproachListActivity::class.java)
         i.addFlags(Intent.FLAG_ACTIVITY_NEW_TASK);
         holder.textView.setOnClickListener{
@@ -66,16 +69,5 @@ class CardExAdapter( val id: Int, val context: Context) : RecyclerView.Adapter<C
         val textView: TextView = itemView.findViewById(R.id.tr_name)
         val delete: ImageView = itemView.findViewById(R.id.img_delete)
         val layout : SwipeRevealLayout = itemView.findViewById(R.id.swipe_layout)
-    }
-
-    fun delete(position: Int){
-        var currentItem : Exercise? = null
-        if (list != null) {
-            currentItem = list!![position]
-        }
-        val db_call_a = DBCallAdapter(context)
-        db_call_a.deleteExFromTraining(currentItem)
-        list = db_call.getAllExByTraining(id)
-        notifyDataSetChanged()
     }
 }

@@ -166,6 +166,17 @@ class DBCall (context: Context) {
         t.start()
     }
 
+    public fun deleteApprFromEx(appr: Approach?){
+        val t = Thread{
+            db = AppDatabase.getDatabase(context);
+            if (appr != null) {
+                db?.ApproachDao()?.delete(appr)
+            }
+        }
+        t.start()
+    }
+
+
     //получение количества подходов упражнения
     public fun getApprKolFromEx(currentItem: Exercise?) : Int? {
         var kol:Int? = null
@@ -182,6 +193,48 @@ class DBCall (context: Context) {
         while (!task.isDone()){}
         return kol
     }
+
+    //получение списка количества подходов упражнений в тренировке по в
+    public fun getApprKolListFromTr(tr_id: Int) : List<Int> {
+        val kol_list: ArrayList<Int> = ArrayList()
+        val r = Callable<ArrayList<Int>> {
+            db = AppDatabase.getDatabase(context);
+            val ex_list = db?.ExerciseDao()?.getInTrainingByID(tr_id)
+            for (ex in ex_list!!){
+                val list_appr = ex.ID_Ex?.let { db?.ApproachDao()?.getInExByID(it) }
+                if (list_appr != null) {
+                    kol_list.add(list_appr.size)
+                }
+            }
+            return@Callable kol_list
+        }
+        val task = FutureTask<ArrayList<Int>>(r)
+        Executors.newSingleThreadExecutor().execute(task)
+        while (!task.isDone()){}
+        return kol_list as List<Int>
+    }
+
+    //получение списка количества подходов упражнений в тренировке по в
+    public fun getDoneApprKolListFromTr(tr_id: Int) : List<Int> {
+        val kol_list: ArrayList<Int> = ArrayList()
+        val r = Callable<ArrayList<Int>> {
+            db = AppDatabase.getDatabase(context);
+            val ex_list = db?.ExerciseDao()?.getInTrainingByID(tr_id)
+            for (ex in ex_list!!){
+                val list_appr = ex.ID_Ex?.let { db?.ApproachDao()?.getInExByID(it) }
+                if (list_appr != null) {
+                    kol_list.add(0)
+                }
+            }
+            return@Callable kol_list
+        }
+        val task = FutureTask<ArrayList<Int>>(r)
+        Executors.newSingleThreadExecutor().execute(task)
+        while (!task.isDone()){}
+        return kol_list as List<Int>
+    }
+
+
 
     //получение списка эффективности всех тренировок
     public fun getAllEffency() : List<Efficiency>? {

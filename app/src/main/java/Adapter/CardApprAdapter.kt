@@ -64,6 +64,15 @@ class CardApprAdapter(var id:Int, val context: Context) : RecyclerView.Adapter<C
             holder.weight.text = currentItem?.weight?.toString() ?: list?.get(0)?.weight?.toString() ?: ""
         }
 
+
+        //удалить подход
+        holder.delete.setOnClickListener{
+            db_call.deleteApprFromEx(currentItem)
+            list = db_call.getAllApprFromEx(id)
+            viewBinderHelper.closeLayout(st)
+            notifyDataSetChanged()
+        }
+
     }
 
 
