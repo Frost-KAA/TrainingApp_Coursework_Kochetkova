@@ -3,17 +3,12 @@ package com.example.myapplication
 import android.annotation.SuppressLint
 import android.content.Intent
 import android.os.Bundle
-import android.util.Log
 import android.view.Menu
 import android.view.MenuItem
-import android.widget.Button
 import android.widget.ExpandableListAdapter
 import android.widget.ExpandableListView
 import androidx.appcompat.app.AppCompatActivity
 import com.example.myapplication.Adapter.CustomExpandableListAdapter
-import com.example.myapplication.DataBase.DBCall
-import com.example.myapplication.DataBase.DBCallCreateTraining
-import com.example.myapplication.Entity.ExerciseList
 import com.google.android.material.floatingactionbutton.FloatingActionButton
 
 class ExpandableExerciseListActivity : AppCompatActivity() {

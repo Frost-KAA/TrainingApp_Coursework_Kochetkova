@@ -1,25 +1,16 @@
 package com.example.myapplication
 
 import android.content.Intent
-import android.os.Build
 import android.os.Bundle
 import android.util.Log
 import android.view.Menu
 import android.view.MenuItem
-import android.widget.Button
 import android.widget.TextView
-import androidx.annotation.RequiresApi
 import androidx.appcompat.app.AppCompatActivity
-import androidx.recyclerview.widget.ItemTouchHelper
 import androidx.recyclerview.widget.LinearLayoutManager
 import androidx.recyclerview.widget.RecyclerView
-import com.example.myapplication.Adapter.CardAdapter
-import com.example.myapplication.Adapter.CardApprAdapter
 import com.example.myapplication.Adapter.CardExAdapter
 import com.example.myapplication.DataBase.DBCall
-import com.example.myapplication.DataBase.DBCallCreateTraining
-import com.example.myapplication.Entity.Exercise
-import com.example.myapplication.Entity.ExerciseList
 import com.google.android.material.floatingactionbutton.FloatingActionButton
 
 class CreateTrainingActivity : AppCompatActivity() {

@@ -11,8 +11,6 @@ import com.chauthai.swipereveallayout.SwipeRevealLayout
 import com.chauthai.swipereveallayout.ViewBinderHelper
 import com.example.myapplication.*
 import com.example.myapplication.DataBase.DBCall
-import com.example.myapplication.DataBase.DBCallAdapter
-import com.example.myapplication.DataBase.DBCallCreateTraining
 import com.example.myapplication.Entity.Exercise
 
 

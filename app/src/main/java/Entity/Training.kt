@@ -6,7 +6,6 @@ import androidx.room.PrimaryKey
 @Entity
 data class Training (
     @PrimaryKey (autoGenerate = true) var ID_Training: Int?,
-
     @ColumnInfo (name = "Name") var name: String?
 )
 

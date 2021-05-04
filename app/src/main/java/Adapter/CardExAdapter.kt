@@ -5,7 +5,6 @@ import android.content.Intent
 import android.view.LayoutInflater
 import android.view.View
 import android.view.ViewGroup
-import android.widget.ImageButton
 import android.widget.ImageView
 import android.widget.TextView
 import androidx.recyclerview.widget.RecyclerView
@@ -13,10 +12,7 @@ import com.chauthai.swipereveallayout.SwipeRevealLayout
 import com.chauthai.swipereveallayout.ViewBinderHelper
 import com.example.myapplication.ApproachListActivity
 import com.example.myapplication.DataBase.DBCall
-import com.example.myapplication.DataBase.DBCallAdapter
-import com.example.myapplication.DataBase.DBCallCreateTraining
 import com.example.myapplication.Entity.Exercise
-import com.example.myapplication.Entity.Training
 import com.example.myapplication.R
 
 class CardExAdapter( val id: Int, val context: Context) : RecyclerView.Adapter<CardExAdapter.ViewHolder>() {

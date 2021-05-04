@@ -1,19 +1,15 @@
 package com.example.myapplication
 
-import Adapter.CardHistoryAdapter
 import android.content.Intent
 import androidx.appcompat.app.AppCompatActivity
 import android.os.Bundle
 import android.view.Menu
 import android.view.MenuItem
-import android.widget.Button
 import android.widget.TextView
 import androidx.recyclerview.widget.LinearLayoutManager
 import androidx.recyclerview.widget.RecyclerView
 import com.example.myapplication.Adapter.CardApprAdapter
 import com.example.myapplication.DataBase.DBCall
-import com.example.myapplication.DataBase.DBCallCreateTraining
-import com.example.myapplication.Entity.Approach
 import com.google.android.material.floatingactionbutton.FloatingActionButton
 
 class ApproachListActivity : AppCompatActivity() {

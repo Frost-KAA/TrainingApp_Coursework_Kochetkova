@@ -7,7 +7,6 @@ import android.view.Menu
 import android.view.MenuItem
 import android.widget.TextView
 import com.example.myapplication.DataBase.DBCall
-import com.example.myapplication.DataBase.DBCallCreateTraining
 
 class NewExerciseActivity : AppCompatActivity() {
 

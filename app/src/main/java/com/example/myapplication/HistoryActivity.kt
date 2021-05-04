@@ -1,8 +1,6 @@
 package com.example.myapplication
 
 import Adapter.CardHistoryAdapter
-import Adapter.CardProcessAdapter
-import android.content.Intent
 import androidx.appcompat.app.AppCompatActivity
 import android.os.Bundle
 import android.view.Menu
@@ -10,7 +8,6 @@ import android.view.MenuItem
 import androidx.recyclerview.widget.LinearLayoutManager
 import androidx.recyclerview.widget.RecyclerView
 import com.example.myapplication.DataBase.DBCall
-import com.example.myapplication.DataBase.DBCallCreateTraining
 
 class HistoryActivity : AppCompatActivity() {
 

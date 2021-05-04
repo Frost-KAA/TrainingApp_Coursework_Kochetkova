@@ -2,21 +2,16 @@ package Adapter
 
 import android.content.Context
 import android.content.Intent
-import android.os.Build
-import android.util.Log
 import android.view.LayoutInflater
 import android.view.View
 import android.view.ViewGroup
 import android.widget.ImageView
-import android.widget.ProgressBar
 import android.widget.TextView
-import androidx.annotation.RequiresApi
 import androidx.recyclerview.widget.RecyclerView
 import com.chauthai.swipereveallayout.SwipeRevealLayout
 import com.chauthai.swipereveallayout.ViewBinderHelper
 import com.example.myapplication.CreateTrainingActivity
 import com.example.myapplication.DataBase.DBCall
-import com.example.myapplication.DataBase.DBCallAdapter
 import com.example.myapplication.Entity.Efficiency
 import com.example.myapplication.R
 import com.example.myapplication.TrainingProcessActivity
